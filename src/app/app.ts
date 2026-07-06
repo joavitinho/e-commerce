@@ -1,9 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+//import { RouterOutlet } from '@angular/router'; //remova importaçao do RouterOutlet,pois nao esta sendo usado no momento
+import { Produto}from './components/produto/produto';//Importe do Componete
 
+ } from './components/produto/produto';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [Produto],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
