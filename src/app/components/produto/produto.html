@@ -2,10 +2,20 @@
 <h2>produto: {{produto}}</h2>
 <p>preço:R$ {{preco}}</p>
 </div>-->
-<div>
-    @if (mostrarproduto){
+<!--<div.
+ @if (mostrarproduto){
   <h3>produto: {{produto}}</h3>h3>       
     }
     @if (mostrarPreco){
 <p>preço: $R {{preco}}</p>
     }
+  </!-->
+
+  <div>
+  @for(item of produtos;track item){
+    <div>
+  <h3>produto{{item.produto|uppercase }}</h3>
+  <p>preço: R${{ item.preco| precoForamatado'}}</p>
+  </div>
+}
+</div>
