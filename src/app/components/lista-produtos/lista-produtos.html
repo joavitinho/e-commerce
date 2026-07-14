@@ -1,0 +1,6 @@
+@for (item of Produtos; track item){
+    <app-produto
+    [nome]="item.nome"
+  [preco]="item.preco"
+  ></app-produto>
+}
