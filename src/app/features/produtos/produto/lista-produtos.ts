@@ -14,4 +14,7 @@ Produtos=[
   {nome:'desktop',preco:49.00},
   {nome: 'headset gamer',preco:699.99},
 ];
+exibirProduto(nome: string) {
+  console.log('Produto selecionado:', nome);
+}
 }

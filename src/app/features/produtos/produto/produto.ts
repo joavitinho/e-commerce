@@ -1,4 +1,4 @@
-import { Component,Input,output } from '@angular/core';
+import { Component,Input,Output, EventEmitter } from '@angular/core';
 import {UpperCasePipe, CurrencyPipe}from '@angular/common';
 import { PrecoFormatadoPipe } from '../../pipes/preco-formatado-pipe';
 import { ListaProdutos} from '../lista-produtos/lista-produtos';
@@ -13,4 +13,9 @@ export class Produto {
 @Input() nome:string=''; 
 @Input() preco: number =0;
 
+@Output() produtoSelecionado: EventEmitter<string> = new EventEmitter<string>();
+
+selecionarProduto(){
+  this.produtoSelecionado.emit(this.nome);
+}
 }
