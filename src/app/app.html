@@ -1,13 +1,17 @@
 <!--Cabeçalho:nome da Loja criado com variavel {{nomeLoja}}-->
-<!--Para altera o nome da loja clocalzar na class app variavel nomeLoja-->>
+<!--Para altera o nome da loja clocalzar na class app variavel nomeLoja-->
 
 <h1>{{nomeLoja}}</h1> 
 
 <!--barra de navegaçao, adicionar as rotas-->>
 <nav>
-<a routerLink="/">Produtos</a>
-<a routerLink="/carrinho">carrinho</a>
+<a routerLink="/">Home</a> |
+
+<a routerLink="/produtos">produtos</a> |
+
+<a routerLink="/carrinho">Carrinho</a>
 
 </nav>
 <hr>
+
 <router-outlet></router-outlet>
