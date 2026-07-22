@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router'; //remova importaçao do RouterOutlet,pois nao esta sendo usado no momento
-//import { Produto } from '../app/features/produtos/produto/produto';
-//import { ListaProdutos} from './features/produtos/lista-produtos/lista-produtos';
+import { login, usuarioLogado, logout } from './core/auth';
 
 
 @Component({
@@ -13,5 +12,7 @@ import { RouterOutlet, RouterLink } from '@angular/router'; //remova importaçao
 export class App {
   protected readonly title = signal('e-commerce');
 nomeLoja = 'JV Studio'; //nome do e-commerce
-
+usuarioLogado = usuarioLogado; //variavel que recebe o sinal de usuario logado
+login = login; 
+logout = logout; 
 }
