@@ -1,75 +1,117 @@
-import { Component,signal } from '@angular/core';
-import { Produto } from '../../../features/produtos/produto/produto';
-import {computed} from '@angular/core';
-import { PrecoFormatadoPipe} from '../../../shared/pipes/preco-formatado-pipe';
-import {effect}from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
+import { Produto } from '../produto/produto';
+import { computed } from '@angular/core';
+import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { UpperCasePipe } from '@angular/common';
+import { produtoService } from '../produtos.service';
+import { inject } from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+
 @Component({
-selector: 'app-lista-produtos',
- imports: [Produto,PrecoFormatadoPipe,UpperCasePipe],
+  selector: 'app-lista-produtos',
+  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe, MatButtonModule, MatCardModule],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
 
 export class ListaProdutos {
-Produtos = signal ([
-  {nome: 'teclado gamer',preco:149.00},
-  {nome: 'mause gamer',preco:299.99},
-  {nome: 'monitor gamer',preco:1599.99},
-  {nome:'desktop gamer',preco:4999.99},
-  {nome: 'headset gamer',preco:699.99},
-]);
-exibirProduto(nome: string) {
-//console.log('Produto selecionado:', nome);
-this.produtoSelecionado.set(nome);
-}
-adicionarProduto() {
- this.Produtos.update((listaAtual) => [
-  ...listaAtual,{nome:'Precossado core i5 14550FS',preco:2500}
- ]);
-}
-totalProdutos =computed(()=> this.Produtos().length);
 
-    valorTotal= computed(()=>{
-  return this.Produtos().reduce
-  ((total,item)=>total + item.preco,0);
-});
-substituirProduto(){
-    this.Produtos.set([
-      {nome:'Teclado',preco:40 },
-      {nome: 'Mause',preco:10},
-      {nome: 'Monitor',preco:100},
-      {nome: 'Desktop',preco:500},
-      {nome: 'Headset',preco:25},
+  //!remover a lista de produtos, dados carregados via API Fakestoreapi
+ produtos = signal < { nome: string; preco: number } []> ([]);
+ //? criar estado de carregamento, 
+ // ** true: requisição em andamento, exibir indicador no template
+ //! false: esconder indicador e exibir lista de produtos 
+ carregando = signal(true);
+
+ erro = signal <string | null> (null)
+
+//?============= MÉTODO HTTP (API) FOI MODIFICADO PARA (ProdutoService) =================
+
+//! criar o método para a requisição dos produtos
+carregarProdutos(){
+
+  this.carregando.set(true);//! Ativa Loading
+  this.erro.set(null)//? Limpa o erro anterior
+
+  this.produtoService.buscarProdutos().subscribe({
+        next: (dados) => {
+          const produtos = this.produtoService.transformarPodutos(dados);
+          this.produtos.set(produtos);
+          this.carregando.set(false);
+        },
+        error: (erro) => {
+          console.error('Erro ao carregar os Produtos: ', erro);
+          this.erro.set('Erro ao carregar Produtos. Verifique sua conexão e tente novamente.');
+          this.carregando.set(false);
+        },
+  });
+}
+
+//? ================= MÉTODOS EXISTENTES Ñ ALTERAR =====================
+
+  exibirProduto(nome: string) {
+    console.log('Produto selecionado: ', nome);
+    this.produtoSelecionado.set(nome);
+  }
+
+  adicionarProduto() { 
+    this.produtos.update((listaAtual) => [
+      ...listaAtual, { nome: 'Processador Core I5 14550FS', preco: 2500.00 },
     ]);
   }
+  totalProdutos = computed(() => this.produtos().length);
+
+  valorTotal = computed(() => {
+    return this.produtos().reduce
+    ((total, item) => total + item.preco, 0);
+  });
+substituirProduto() {
+    this.produtos.set([
+      {nome: 'Teclado', preco: 40.00},
+       {nome: 'Mouse', preco: 10.00},
+        {nome: 'Monitor', preco: 100.00},
+         {nome: 'Desktop', preco: 500.00},
+          {nome: 'Headset', preco: 25.00 },
+    ]);
+  }
+
+  //! injetar httpClient dentro de constructor, reestruturar constructor!!!
   constructor(){
-      effect(() =>{
-        console.log('Lista de Produtos Alterados:', this.Produtos ());
+
+    //! Carregar a API
+    this.carregarProdutos();
+
+    //! effects continuam iguais
+  effect(() => {
+    console.log('Lista de Produtos Alterados: ', this.produtos());
+
   });
-    effect(()=>{
-      console.log('Valor total Atualizado',this.valorTotal ());
+  effect(() =>{
+    console.log('Valor Total Atualizados: ', this.valorTotal());
 
-      });
-
-      effect(()=> {
-        if (typeof document !== 'undefined'){
-          document.title = `(${this.totalProdutos()})Minha Loja`;
-        }
-      });
-}
-produtoSelecionado = signal <string | null>(null);
-carrinho = signal <{nome: string; preco: number} []>([]);
-
-adicionarAoCarrinho(produto: {nome:string; preco:number}){
-this.carrinho.update(listaAtual =>[
-  ...listaAtual,produto]);}
-
-  quantidadeCarrinho = computed(()=>this.carrinho().length);
-  
-  totalCarrinho = computed(()=> {
-    return this.carrinho().reduce((total,item) =>
-      total+item.preco,0);
   });
+  effect(() => {
+    if (typeof document !== 'undefined') {
+      document.title = `(${this.totalProdutos()}) Minha Loja`;
 
+    }
+  });
+ }
+ 
+ produtoSelecionado = signal <string | null > (null);
+ carrinho = signal<({nome: string; preco: number}[])>([]);
+ adicionarAoCarrinho(produto: {nome: string; preco: number}){
+    this.carrinho.update(listaAtual => 
+      [...listaAtual, produto]);}
+
+quantidadeCarrinho = computed(() => this.carrinho().length);
+
+totalCarrinho = computed(()=> {
+  return this.carrinho().reduce((total, item) => 
+   total+item.preco,0);
+});
+
+//? ================ INJECT ====================
+private produtoService = inject (produtoService);
 }

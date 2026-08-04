@@ -1,11 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router'; //remova importaçao do RouterOutlet,pois nao esta sendo usado no momento
 import { login, usuarioLogado, logout } from './core/auth';
-
+import { Header } from "./shared/layout/header/header";
+import { MatIcon } from "@angular/material/icon";
+import { MatAnchor } from "@angular/material/button";
+import { UpperCasePipe } from '@angular/common';
+//!import {listaProdutos} from './features/produtos/lista-produtos/lista-produtos'
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, Header, MatIcon, MatAnchor],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
