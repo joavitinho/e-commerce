@@ -1,15 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router'; //remova importaçao do RouterOutlet,pois nao esta sendo usado no momento
+import { RouterOutlet } from '@angular/router'; //remova importaçao do RouterOutlet,pois nao esta sendo usado no momento
 import { login, usuarioLogado, logout } from './core/auth';
 import { Header } from "./shared/layout/header/header";
-import { MatIcon } from "@angular/material/icon";
-import { MatAnchor } from "@angular/material/button";
+import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { MatAnchor, MatButtonModule } from "@angular/material/button";
 import { UpperCasePipe } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterLink } from '@angular/router';
 //!import {listaProdutos} from './features/produtos/lista-produtos/lista-produtos'
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, Header, MatIcon, MatAnchor],
+  imports: [RouterOutlet, RouterLink, Header, MatIconModule, MatToolbarModule,MatButtonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
