@@ -2,11 +2,12 @@
 
 <main style="padding: 20px;">
 
-    <section class="auth-temp"style="margin: bottom 20px;">
-        <button mat-stroked-button(click)="login()">login</button>
-        <button mat-stroked-button(click)="logout()">logout</button>
+    <section class="auth-temp" style="margin: bottom 20px;">
+        <button mat-stroked-button (click)="login()">login</button>
+        <button mat-stroked-button (click)="logout()">logout</button>
         <p>Status: {{usuarioLogado()? 'logado': 'Deslogado'}}<p>
         </section>
+</main>
+
         
-    </main>
     <router-outlet><router-outlet>
