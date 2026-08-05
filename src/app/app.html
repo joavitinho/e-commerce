@@ -1,13 +1,14 @@
 <app-header></app-header>
 
-<main style="padding: 20px;">
+<main class="container-principal">
 
-    <section class="auth-temp" style="margin: bottom 20px;">
+    <section class="container-principal">
+    <section class="bloco-controle">
         <button mat-stroked-button (click)="login()">login</button>
         <button mat-stroked-button (click)="logout()">logout</button>
         <p>Status: {{usuarioLogado()? 'logado': 'Deslogado'}}<p>
         </section>
-</main>
+</section>
 
         
     <router-outlet><router-outlet>
