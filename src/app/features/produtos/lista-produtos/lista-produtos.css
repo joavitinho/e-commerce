@@ -6,7 +6,7 @@ gap: 16px
 }
 
 /*BreakPoints: Mobile (adroid e ios) e tablet: ate 600px*/
-@media (main-width: 600px){
+@media (min-width: 600px){
 .grid-produtos {
     grid-template-columns: repeat(2, 1fr);  /*abaixo de 600px Mobile| 1 em 600px para tablet,*/
 
@@ -16,7 +16,7 @@ gap: 16px
 /*Brekpoints: Desktop ate 900px*/
 @media(min-width:900px){
 .grid-produtos{
-grid-template-columns: repeat(3, ifr); 
+grid-template-columns: repeat(3, 1fr); 
 
 }
 
