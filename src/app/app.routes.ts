@@ -49,9 +49,14 @@ loadComponent:() =>
 
 },
 {
+        path:'carrinho',
+        canActivate: [],
+        loadComponent: ()=>
+            import ('./features/checkout/checkout/checkout').then((m) =>m.Checkout),
+},
+{
     path: '**',
     redirectTo: '',
 },
-
 
 ]
