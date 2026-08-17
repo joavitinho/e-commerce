@@ -1,14 +1,11 @@
 <app-header></app-header>
-
-<main class="container-principal">
-
-    <section class="container-principal">
-    <section class="bloco-controle">
-        <button mat-stroked-button (click)="login()">login</button>
-        <button mat-stroked-button (click)="logout()">logout</button>
-        <p>Status: {{usuarioLogado()? 'logado': 'Deslogado'}}<p>
-        </section>
-</section>
+<main class = "container-pricipal">
+    <!--conteudo dinamico principal-->
+    
+  <router-outlet></router-outlet>
+  </main>
+      
+       
 
         
-    <router-outlet><router-outlet>
+    
